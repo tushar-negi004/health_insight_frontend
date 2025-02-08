@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { Box, TextField, InputAdornment, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
@@ -7,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 
 
 
-const FeedBack = () => {
+const NeuroBOT = () => {
 
   
   const theme = useTheme();
@@ -145,4 +146,4 @@ const FeedBack = () => {
   );
 };
 
-export default FeedBack;
+export default NeuroBOT;

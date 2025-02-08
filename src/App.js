@@ -6,8 +6,7 @@ import NavBar from './components/navigation';
 import CustomCarousel from './components/home/carousel';
 import Tool from './components/tool/tool';
 import Working from './components/working/working';
-import FeedBack from './components/exp_feat/exp_feat';
-
+import NeuroBOT from './components/exp_feat/NeuroBOT';
 
 import './App.css';
 
@@ -22,7 +21,7 @@ function App() {
           <Route path="/" element={<CustomCarousel />} />
           <Route path="/tool" element={<Tool />} />
           <Route path="/working" element={<Working />} />
-          <Route path="/feedback" element={<FeedBack />} />
+          <Route path="/NeuroBOT" element={<NeuroBOT />} />
         </Routes>
       </Router>
     </>

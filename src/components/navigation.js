@@ -12,7 +12,7 @@ function Navigation() {
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/tool">Tool</Nav.Link>
           <Nav.Link as={Link} to="/working">Working</Nav.Link>
-          <Nav.Link as={Link} to="/feedback">NeuroBOT</Nav.Link>
+          <Nav.Link as={Link} to="/NeuroBOT">NeuroBOT</Nav.Link>
         </Nav>
       </Container>
     </Navbar>
