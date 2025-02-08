@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+/* chatStyle.css */
+
+
+/* 🔹 Small Phones (max-width: 360px) */
+@media (max-width: 360px) {
+  .chat-container {
+    max-height: 60vh;
+  }
+}
+
+/* 🔹 Regular Phones (361px - 414px) */
+@media (min-width: 361px) and (max-width: 414px) {
+  .chat-container {
+    max-height: 65vh;
+  }
+}
+
+/* 🔹 Large Phones & Small Tablets (415px - 600px) */
+@media (min-width: 415px) and (max-width: 600px) {
+  .chat-container {
+    max-height: 70vh;
+  }
+}
+
+/* 🔹 Tablets (601px - 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .chat-container {
+    max-height: 75vh;
+  }
+}
+
+/* 🔹 Laptops & Bigger Screens (1025px and above) */
+@media (min-width: 1025px) {
+  .chat-container {
+    max-height: 80vh;
+  }
+}
+
+
+
+.chat-container {
+ 
+  
+  width: 100%;
+  overflow-y: scroll;
+}
+
+
+
+
+
+
+
+.temp-div{
+  height: 70vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greeting-heading {
+  font-family: 'Ubuntu', sans-serif;
+ }
+
+.icon-button:hover {
+  color: aqua;
+}
+
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  max-width: 80%;
+  clear: both;
+}
+
+.user-message {
+
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  background-color: #9AE3D4;
+  margin-left: auto;
+  text-align: right;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.bot-message {
+  background-color: whitesmoke;
+  margin-right: auto;
+  text-align: left;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* Optional: To make the chat bubbles more pretty */
+.message p {
+  margin: 0;
+}
