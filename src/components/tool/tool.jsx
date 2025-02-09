@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -18,12 +18,20 @@ import DialogContentText from '@mui/material/DialogContentText';
 import axios from 'axios';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
+
+
 const Tool = () => {
-  const [divs, setDivs] = useState([]);
-  const [showAlert, setShowAlert] = useState(true);
+
+  const [showAlert1, setShowAlert1] = useState(true);
+  const [showAlert2, setShowAlert2] = useState(true);
   const [incompleteAlert, setIncompleteAlert] = useState(false);
   const [inputAge, setInputAge] = useState('');
-
+  const [humanLimits, setHumanLimits] = useState(false);
+  const [wrongInput, setWrongInput] = useState(false);
+  const [isTeen, setIsTeen] = useState(false);
+  const [showResult, setShowResult] = useState(false);
+  const [stars,setStars] = useState(0);
+  
   const handleage = (e) => {
     setInputAge(e.target.value);
   }
@@ -70,54 +78,80 @@ const Tool = () => {
   }
   const [healthScore, setHealthScore] = useState(0);
 
-  let response = 0;
-  const BMI = Number(Number(inputWeight) / Number(inputHeight * inputHeight));
+ 
 
-  const [wrongInput, setWrongInput] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [reload, setReload] = useState(false);
+  useEffect(() => {
+    setShowResult(false); 
+  }, [inputAge, inputHeight, inputWeight, inputDrinking, inputSmoking]);
+  
+
+
 
   const senddata = async () => {
-    setIsDisabled(true);
+  
+    setShowResult(false);
     setIncompleteAlert(false);
     setWrongInput(false);
-    if (inputAge === '' || inputHeight === '' || inputWeight === '' || inputDrinking === '' || inputSmoking === '') {
+
+    if ([inputAge, inputHeight, inputWeight, inputDrinking, inputSmoking].some(val => val.trim() === '') ) {
       setIncompleteAlert(true);
-    } else {
-      if (
-        Number.isInteger(Number(inputAge)) &&
-        !isNaN(Number.parseInt(inputHeight)) &&
-        !isNaN(Number.parseInt(inputWeight)) &&
-        Number.isInteger(Number(inputDrinking)) &&
-        Number.isInteger(Number(inputSmoking))
-      ) {
-        try {
-          response = await axios.post(" https://health-insight-backend.onrender.com/predict", {
-            "sex": Number(inputGender),
-            "BMI": BMI,
-            "cigars_weekly": Number(inputSmoking),
-            "drinks_weekly": Number(inputDrinking),
-            "exercise": Number(inputExercise),
-            "chronic_disease": Number(inputChronic),
-            "diet_quality": Number(inputDiet),
-            "healthcare": Number(inputHealthCare),
-            "current_age": Number(inputAge),
-          });
-
-          setHealthScore(response.data.health_score);
-          setDivs([...divs, { id: divs.length }]);
-
-          setTimeout(() => {
-            setReload(true);
-          }, 5000);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        setWrongInput(true);
-      }
-    }
   }
+  else {
+        if (
+          Number.isInteger(Number(inputAge)) &&
+          !isNaN(Number(inputHeight)) && // Allows decimals too
+          !isNaN(Number(inputWeight)) && // Allows decimals too
+          Number.isInteger(Number(inputDrinking)) &&
+          Number.isInteger(Number(inputSmoking)) &&
+          Number(inputAge) > 0
+        ){          
+            if (Number(inputAge) > 13 && Number(inputAge) < 20) {
+                
+              
+                if ((Number(inputHeight) < 3 && Number(inputHeight) >= 0.5) && (Number(inputWeight) < 300  && Number(inputWeight) > 10)&& Number(inputDrinking) <= 30 && Number(inputSmoking) <= 100) {
+                    try {
+
+                      const height = parseFloat(inputHeight);
+                      const weight = parseFloat(inputWeight);
+                      const BMI = weight / (height * height);
+
+                        let response = await axios.post("https://health-insight-backend.onrender.com/predict", {
+                            "sex": Number(inputGender),
+                            "BMI": BMI,
+                            "cigars_weekly": Number(inputSmoking),
+                            "drinks_weekly": Number(inputDrinking),
+                            "exercise": Number(inputExercise),
+                            "chronic_disease": Number(inputChronic),
+                            "diet_quality": Number(inputDiet),
+                            "healthcare": Number(inputHealthCare),
+                            "current_age": Number(inputAge),
+                        });
+
+                        setHealthScore(response.data.health_score);
+                        console.log(healthScore);
+                        setStars(Number(10 * response.data.health_score / 80));
+                        setShowResult(true);
+
+                        
+                    } catch (error) {
+                        console.log(error);
+                    }
+                  
+                } else {
+                    
+                    setHumanLimits(true); 
+                }
+            } else {
+                
+                setIsTeen(true);
+            }
+        } else {
+            
+            setWrongInput(true);
+        }
+    }
+};
+
 
   return (
     <>
@@ -134,18 +168,37 @@ const Tool = () => {
         </DialogActions>
       </Dialog>
 
-      <Dialog open={reload}>
+      <Dialog open={humanLimits}>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <strong>Think your score can be different? Refresh and experiment!</strong>
+            <strong>Entered values exceed human limits. Please enter realistic values.</strong>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setReload(false)} autoFocus>
+          <Button onClick={() => setHumanLimits(false)} autoFocus>
             okay.
           </Button>
         </DialogActions>
       </Dialog>
+
+
+      <Dialog open={isTeen}>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <strong>
+              The predictor is currently designed for teens and is being developed for a wider audience
+            </strong>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsTeen(false)} autoFocus>
+            okay.
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+
+     
 
       <Dialog open={wrongInput}>
         <DialogContent>
@@ -160,14 +213,20 @@ const Tool = () => {
         </DialogActions>
       </Dialog>
 
-      {showAlert && (
-        <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible>
+      {showAlert1 && (
+        <Alert variant="danger" onClose={() => setShowAlert1(false)} dismissible>
           <Alert.Heading>Important Notice!</Alert.Heading>
           <p>
             The health score provided by this tool is only a prediction based on the input data.
             It is <strong>not</strong> a medical diagnosis or an accurate measure of your health.
             Please consult a healthcare professional for any serious health concerns.
           </p>
+        </Alert>
+      )}
+
+      {showAlert2 && (
+        <Alert variant="info" onClose={() => setShowAlert2(false)} dismissible>
+          <p>This tool is currently intended for teen users only.</p>
         </Alert>
       )}
 
@@ -311,83 +370,79 @@ const Tool = () => {
             </Container>
           </div>
           <div className='submit-data-button'>
-            <Button as="input" type="submit" value="Submit" onClick={senddata} disabled={isDisabled} />
+            <Button as="input" type="submit" value="Submit" onClick={senddata}/>
           </div>
         </Paper>
       </Box>
+{showResult && (
+      <div style={{ height: '30vh' }}>
+  <Box className='maincontainer'
+    sx={{
+      display: 'flex',
+      flexWrap: 'wrap',
+      '& > :not(style)': { m: 1 },
+    }}
+  >
+    <Paper elevation={24}
+      style={{
+        width: '80vw',
+        height: '100%',
+        padding: '16px',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div className='stars-heading'>
+        <h4>Your Predicted Health Score</h4>
+      </div>
 
-      <div>
-        {divs.map((div) => (
-          <div key={div.id} style={{ height: '30vh' }}>
-            <Box className='maincontainer'
-              sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                '& > :not(style)': {
-                  m: 1,
-                },
+      <Box sx={{ display: "flex", alignItems: "center", mt: 2, flexDirection: 'column' }} >
+        <div className='star-rating'>
+          <Rating
+            // value={Number(10 * healthScore / 80)}
+            value = {stars}  
+            max={10}
+            readOnly
+            precision={0.5}
+            icon={<StarIcon style={{ color: "#FFD700", fontSize: "clamp(1.2rem, 2vw, 2rem)" }} />}
+            emptyIcon={<StarIcon style={{ opacity: 0.7, color: "whitesmoke", fontSize: "clamp(1.2rem, 2vw, 2rem)", stroke: "#FFD700" }} />}
+          />
+        </div>
+      </Box>
+
+      <div className="disclaimer-points">
+        {[
+          "The health score provided is an approximation and should not be considered as a definitive measure of your health.",
+          "This prediction is based on the information you provided and may not fully represent your individual health status.",
+          "The score is generated from general data and should not be used as a replacement for professional medical advice or consultation.",
+          "Health predictions are subject to change and should be considered as a guide. For accurate health assessments, please consult a healthcare provider."
+        ].map((text, index) => (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: "8px",
+              marginBottom: "8px"
+            }}
+          >
+            <InfoOutlinedIcon
+              style={{
+                fontSize: "clamp(12px, 1.8vw, 16px)",
+                color: "gray",
+                marginTop: "4px"
               }}
-            >
-              <Paper elevation={24}
-                style={{
-                  width: '80vw',
-                  height: '100%',
-                  padding: '16px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <div className='stars-heading'>
-                  <h4>Your Predicted Health Score</h4>
-                </div>
-                <Box sx={{ display: "flex", alignItems: "center", mt: 2, flexDirection: 'column' }} >
-                  <div className='star-rating'>
-                    <Rating
-                      value={Number(10 * healthScore / 80)}
-                      max={10}
-                      readOnly
-                      precision={0.5}
-                      icon={<StarIcon style={{ color: "#FFD700", fontSize: "clamp(1.2rem, 2vw, 2rem)" }} />}
-                      emptyIcon={<StarIcon style={{ opacity: 0.7, color: "whitesmoke", fontSize: "clamp(1.2rem, 2vw, 2rem)", stroke: "#FFD700" }} />}
-                    />
-                  </div>
-                </Box>
-
-                <div className="disclaimer-points">
-                  {[
-                    "The health score provided is an approximation and should not be considered as a definitive measure of your health.",
-                    "This prediction is based on the information you provided and may not fully represent your individual health status.",
-                    "The score is generated from general data and should not be used as a replacement for professional medical advice or consultation.",
-                    "Health predictions are subject to change and should be considered as a guide. For accurate health assessments, please consult a healthcare provider."
-                  ].map((text, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "8px",
-                        marginBottom: "8px"
-                      }}
-                    >
-                      <InfoOutlinedIcon
-                        style={{
-                          fontSize: "clamp(12px, 1.8vw, 16px)",
-                          color: "gray",
-                          marginTop: "4px"
-                        }}
-                      />
-                      <p style={{ fontSize: "clamp(12px, 1.2vw, 14px)", margin: 0 }}>
-                        {text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-              </Paper>
-            </Box>
+            />
+            <p style={{ fontSize: "clamp(12px, 1.2vw, 14px)", margin: 0 }}>
+              {text}
+            </p>
           </div>
         ))}
       </div>
+
+    </Paper>
+  </Box>
+</div>)}
 
       <footer className='toolfooter'></footer>
     </>

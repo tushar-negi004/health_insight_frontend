@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { Box, TextField, InputAdornment, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
@@ -10,7 +10,19 @@ import { useTheme } from "@mui/material/styles";
 
 const NeuroBOT = () => {
 
-  
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(window.innerWidth < 1024);
+
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileOrTablet(window.innerWidth < 1024);
+    };
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+
   const theme = useTheme();
 
   const [inputValue, setInputValue] = useState('');
@@ -65,52 +77,45 @@ const NeuroBOT = () => {
 
   return (
 <>
-
-
-
-    <div className='temp-div'>
-      {isVisible && <div><h1 className='greeting-heading'>How may I assist you?</h1></div>}
-    </div>
-
-
-    <Box
-      sx={{
-        
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-        bgcolor: 'background.paper',
-        p: 2,
-        [theme.breakpoints.down("sm")]: {
-          mb:"4vh",
-        }
-      }}
-      
-    >
-      {/* Chat messages container */}
-
-      
-      <div className="chat-container">
-
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={`message ${message.type === 'user' ? 'user-message' : 'bot-message'}`}
-          >
-
-            
-            <p>{message.text}</p>
+{isMobileOrTablet ? (
+        <div className='for-android'><h4>NeuroBOT is only available on desktops.</h4></div>
+      ) : (
+        <div>
+          <div className="temp-div">
+            {isVisible && (
+              <div>
+                <h1 className="greeting-heading">How may I assist you?</h1>
+              </div>
+            )}
           </div>
 
-        )
+          <Box
+            sx={{
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              bgcolor: "background.paper",
+              p: 2,
+              [theme.breakpoints.down("sm")]: {
+                mb: "4vh",
+              },
+            }}
+          >
+            {/* Chat messages container */}
+            <div className="chat-container">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`message ${message.type === "user" ? "user-message" : "bot-message"}`}
+                >
+                  <p>{message.text}</p>
+                </div>
+              ))}
+            </div>
 
-        )}
-      </div>
-
-
-      {/* Input field with send button */}
-      <TextField 
+            {/* Input field with send button */}
+            <TextField 
         
         onKeyDown={pressed}
         
@@ -140,10 +145,13 @@ const NeuroBOT = () => {
           },
         }}
       />
-    </Box>
-  
+          </Box>
+        </div>
+      )}
+
     </>
   );
-};
+} 
+
 
 export default NeuroBOT;

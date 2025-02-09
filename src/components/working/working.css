@@ -1,15 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
+.main-working-container{
+  display: flex;
+  flex-direction: column;
+  margin-left: 2vw;
+  margin-right: 2vw;
+}
 
+.working-content{
+  flex: 1;
+}
 
 .working-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
     background: #f9f9f9;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Verdana', sans-serif;
   }
   
 
@@ -18,40 +24,34 @@
 
   .heading {
    
-    margin-top: 15px;
-    font-size: 28px;
+    margin-top: 2vh;
     color: #333;
-    margin-bottom: 10px;
-    font-family: 'Ubuntu', sans-serif;
-    padding-bottom: 5px;
+    margin-bottom: 2vh;
+    font-family: 'Verdana', sans-serif;
   }
   
   .para {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Verdana', sans-serif;
     font-size: 16px;
     line-height: 1.6;
     color: #555;
   }
   
   .workinglist {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Verdana', sans-serif;
     padding-left: 20px;
   }
   
   .workinglist li {
-    font-family: 'Ubuntu', sans-serif;
-    margin-bottom: 10px;
+    font-family: 'Verdana', sans-serif;
     font-size: 16px;
     color: #444;
-    list-style-type: none;
-    position: relative;
-    
-  }
+}
   
  
   
   .strongdata {
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Verdana', sans-serif;
     color: #da4848;
   }
  
