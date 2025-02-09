@@ -1,63 +1,85 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
-.carousel-img{
+.carousel-img {
   opacity: 0.7;
   transition: background 0.5s ease-in-out;
 }
 
-.carousel-text{
+.carousel-text {
   color: #212121;
   display: inline-block;
- 
+
   font-family: 'Ubuntu', sans-serif;
 
 }
 
-.carousel-img:hover{
+.carousel-img:hover {
   opacity: 0.9;
 }
 
 
-.mygrid{
-    margin-top: 10vh;
-   
-}
+.mygrid-android {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 
-.homefooter{
-    
-        height: 100%;
-        background-color: #282a35;
-        border-top : 2px solid #282a35;
-        border-bottom : 2px solid #282a35;
-    
-      
-      
-}
-
-@media (max-width: 600px) {
-.homedescription{
-    text-align: center;
-
-    font-size: medium;
-    font-family: 'Ubuntu', sans-serif;
-
-
-}    
-}
-
-@media (min-width: 1025px) {
-    .homedescription{
-    font-size: xx-large;
-    font-family: 'Ubuntu', sans-serif;
-        
-    }
 }
 
 
-.homeimage img{
-    max-width: 100%;  
-    height: auto; 
+home-description-android {
+  margin-top: 2vh;
+  font-size: medium;
+  font-family: 'Ubuntu', sans-serif;
+
+}
+
+home-image-android {
+  max-width: 100%;
+  height: auto;
+}
+
+.mygrid-desktop {
+  margin-top: 10vh;
+
+}
+
+.homefooter {
+  
+  
+ 
+  background-color: #282a35;
+  border-top: 2px solid #282a35;
+  border-bottom: 2px solid #282a35;
+
+
+
+}
+
+
+.footer-brand p img{
+  margin-right: 1vw;
+}
+
+
+.homedescription {
+  font-size: xx-large;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 
 
+
+.home-image-desktop img {
+  max-width: 100%;
+  height: auto;
+}
+
+.git-logo{
+margin-right: 1vw ;
+margin-left: 1vw;
+}
+
+
+.home-footer-content{
+  color: whitesmoke;
+}

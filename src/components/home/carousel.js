@@ -7,8 +7,25 @@ import firstImage from './first-carousel.webp';
 import secondImage from './second-carousel.webp';
 import thirdImage from './third-carousel.webp';
 import mainImage from './who.webp';
+import { useState, useEffect } from 'react';
+import Stack from 'react-bootstrap/Stack';
+
+
+
+
 
 function CustomCarousel() {
+
+  const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileOrTablet(window.innerWidth < 720);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <div className='carousel-container'>
@@ -53,23 +70,60 @@ function CustomCarousel() {
           </Carousel.Item>
         </Carousel>
       </div>
-      <div className='mygrid'>
-        <Container>
-          <Row>
-            <Col className="d-flex align-items-center justify-content-center">
-              <div className='homedescription'>
+
+
+      <div >
+
+
+        {isMobileOrTablet ? (
+          <Container>
+            <Stack gap={3}>
+              <div className="p-4 home-description-android">
+
+
                 Future Health Insight analyzes your lifestyle, habits, and overall well-being to generate a health score. Based on this score, we provide personalized insights and tips to help you achieve a healthier future.
               </div>
-            </Col>
-            <Col>
-              <div className='homeimage'>
+              <img src={mainImage} alt='Main' />
+            </Stack>
+          </Container>
+        ) : (
+          <Container className='mygrid-desktop'>
+            <Row>
+              <Col className="d-flex align-items-center justify-content-center homedescription">
+
+                Future Health Insight analyzes your lifestyle, habits, and overall well-being to generate a health score. Based on this score, we provide personalized insights and tips to help you achieve a healthier future.
+
+              </Col>
+              <Col className='home-image-desktop'>
                 <img src={mainImage} alt='Main' />
-              </div>
+              </Col>
+            </Row>
+          </Container>)
+        }
+      </div>
+      <footer className="homefooter">
+        <Container>
+          <Row className='home-footer-content'>
+            <Col md={4} className="footer-contact">
+              <p>Stay connected
+                <span className='git-logo'>
+                  <a href="https://github.com/tushar-negi004">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="25" height="25" alt = '' />
+                  </a>
+
+                </span>
+                <span>
+                  <a href="https://linkedin.com/in/tushar-negi004">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="25" height="25" alt = '' />
+                  </a>
+                </span>
+              </p>
+
             </Col>
           </Row>
         </Container>
-      </div>
-      <footer className='homefooter'></footer>
+      </footer>
+
     </>
   );
 }

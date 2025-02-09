@@ -1,5 +1,9 @@
 import * as React from 'react';
-import './working.css'
+import './working.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 const Working = () => {
     return (
         <>
@@ -31,11 +35,29 @@ const Working = () => {
                 <h1 className='heading'>Data & Sources</h1>
                 <p className='para'>Our predictions are based on publicly available health datasets, research on longevity factors, and machine learning techniques. While this tool provides helpful insights,<strong className='strongdata'> it is not a medical diagnosis tool.</strong></p>
                 <div className='working-content'></div>
-                <footer className='workingfooter'>
+</div>
+<footer className="working-footer">
+        <Container className='workinng-container'>
+          <Row className='home-footer-content'>
+            <Col md={4} className="footer-contact">
+              <p>Stay connected
+                <span className='git-logo'>
+                  <a href="https://github.com/tushar-negi004">
+                    <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"  alt = ' ' width="25" height="25" />
+                  </a>
 
-                </footer>
+                </span>
+                <span>
+                  <a href="https://linkedin.com/in/tushar-negi004">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" width="25" height="25" alt='' />
+                  </a>
+                </span>
+              </p>
 
-            </div>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
         </>
     );
 }

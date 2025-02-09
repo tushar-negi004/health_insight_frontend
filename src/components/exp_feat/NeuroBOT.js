@@ -8,6 +8,8 @@ import { useTheme } from "@mui/material/styles";
 
 
 
+
+
 const NeuroBOT = () => {
 
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(window.innerWidth < 1024);
@@ -78,7 +80,7 @@ const NeuroBOT = () => {
   return (
 <>
 {isMobileOrTablet ? (
-        <div className='for-android'><h4>NeuroBOT is only available on desktops.</h4></div>
+        <div className='for-android'><h4>NeuroBOT is only available on desktops and tablets.</h4></div>
       ) : (
         <div>
           <div className="temp-div">

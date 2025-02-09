@@ -18,6 +18,7 @@ function App() {
       <Router>
         <NavBar />
         <Routes>
+          <Route path='logo' />
           <Route path="/" element={<CustomCarousel />} />
           <Route path="/tool" element={<Tool />} />
           <Route path="/working" element={<Working />} />

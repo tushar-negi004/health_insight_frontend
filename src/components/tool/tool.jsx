@@ -31,7 +31,8 @@ const Tool = () => {
   const [isTeen, setIsTeen] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [stars,setStars] = useState(0);
-  
+  const [isLoading,setIsLoading] = useState(false);
+
   const handleage = (e) => {
     setInputAge(e.target.value);
   }
@@ -82,13 +83,13 @@ const Tool = () => {
 
   useEffect(() => {
     setShowResult(false); 
-  }, [inputAge, inputHeight, inputWeight, inputDrinking, inputSmoking]);
+  }, [inputAge, inputHeight, inputWeight, inputDrinking, inputSmoking, inputGender, inputExercise, inputChronic, inputHealthCare, inputDiet]);
   
 
 
 
   const senddata = async () => {
-  
+    setIsLoading(true);
     setShowResult(false);
     setIncompleteAlert(false);
     setWrongInput(false);
@@ -131,15 +132,18 @@ const Tool = () => {
                         console.log(healthScore);
                         setStars(Number(10 * response.data.health_score / 80));
                         setShowResult(true);
-
+                        setIsLoading(false);
                         
                     } catch (error) {
+                      setIsLoading(false);
                         console.log(error);
+                        
                     }
                   
                 } else {
                     
                     setHumanLimits(true); 
+
                 }
             } else {
                 
@@ -155,6 +159,8 @@ const Tool = () => {
 
   return (
     <>
+
+    <div style={{ opacity: isLoading ? 0.5 : 1, transition: "opacity 0.3s ease-in-out" }}>
       <Dialog open={incompleteAlert}>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -162,7 +168,7 @@ const Tool = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIncompleteAlert(false)} autoFocus>
+          <Button onClick={() => {setIncompleteAlert(false);setIsLoading(false);}} autoFocus>
             okay.
           </Button>
         </DialogActions>
@@ -175,7 +181,7 @@ const Tool = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setHumanLimits(false)} autoFocus>
+          <Button onClick={() => {setHumanLimits(false);setIsLoading(false);}} autoFocus>
             okay.
           </Button>
         </DialogActions>
@@ -191,7 +197,7 @@ const Tool = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIsTeen(false)} autoFocus>
+          <Button onClick={() => {setIsTeen(false);setIsLoading(false);}} autoFocus>
             okay.
           </Button>
         </DialogActions>
@@ -207,7 +213,7 @@ const Tool = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setWrongInput(false)} autoFocus>
+          <Button onClick={() => {setWrongInput(false);setIsLoading(false);}} autoFocus>
             okay.
           </Button>
         </DialogActions>
@@ -440,11 +446,14 @@ const Tool = () => {
         ))}
       </div>
 
+
     </Paper>
   </Box>
-</div>)}
+</div>
 
-      <footer className='toolfooter'></footer>
+)}
+
+</div>
     </>
   );
 };

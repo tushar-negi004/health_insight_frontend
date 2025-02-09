@@ -20,7 +20,10 @@
   
 
   
-
+.working-footer{
+  background-color: #333;
+ 
+}
 
   .heading {
    
@@ -55,3 +58,7 @@
     color: #da4848;
   }
  
+
+  .working-container{
+    width: 100vw;
+  }
