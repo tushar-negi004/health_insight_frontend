@@ -36,10 +36,10 @@ const Working = () => {
                 <p className='para'>Our predictions are based on publicly available health datasets, research on longevity factors, and machine learning techniques. While this tool provides helpful insights,<strong className='strongdata'> it is not a medical diagnosis tool.</strong></p>
                 <div className='working-content'></div>
 </div>
-<footer className="working-footer">
+<footer className="working-footer" style={{marginTop : "2vh"}}>
         <Container className='workinng-container'>
           <Row className='home-footer-content'>
-            <Col md={4} className="footer-contact">
+            <Col md={4} className="footer-contact" style={{marginTop: "1vh"}}>
               <p>Stay connected
                 <span className='git-logo'>
                   <a href="https://github.com/tushar-negi004">

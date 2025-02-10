@@ -30,23 +30,23 @@ home-description-android {
   margin-top: 2vh;
   font-size: medium;
   font-family: 'Ubuntu', sans-serif;
+  
 
 }
 
 home-image-android {
   max-width: 100%;
+  max-height: 50%;
   height: auto;
 }
 
 .mygrid-desktop {
-  margin-top: 10vh;
+  margin-top: 5vh;
 
 }
 
 .homefooter {
   
-  
- 
   background-color: #282a35;
   border-top: 2px solid #282a35;
   border-bottom: 2px solid #282a35;
@@ -67,11 +67,18 @@ home-image-android {
 }
 
 
-
+.home-image-desktop{
+  
+display: flex;
+align-items: center;
+justify-content: center;
+}
 
 .home-image-desktop img {
+
   max-width: 100%;
   height: auto;
+  max-height: 50%;
 }
 
 .git-logo{
@@ -81,5 +88,6 @@ margin-left: 1vw;
 
 
 .home-footer-content{
+
   color: whitesmoke;
 }

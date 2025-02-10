@@ -6,10 +6,9 @@ import Carousel from 'react-bootstrap/Carousel';
 import firstImage from './first-carousel.webp';
 import secondImage from './second-carousel.webp';
 import thirdImage from './third-carousel.webp';
-import mainImage from './who.webp';
+import mainImage from './main.png';
 import { useState, useEffect } from 'react';
 import Stack from 'react-bootstrap/Stack';
-
 
 
 
@@ -101,10 +100,10 @@ function CustomCarousel() {
           </Container>)
         }
       </div>
-      <footer className="homefooter">
+      <footer className="homefooter" style={{marginTop : "2vh"}}>
         <Container>
           <Row className='home-footer-content'>
-            <Col md={4} className="footer-contact">
+            <Col md={4} className="footer-contact" style={{marginTop: "1vh"}}>
               <p>Stay connected
                 <span className='git-logo'>
                   <a href="https://github.com/tushar-negi004">
