@@ -312,7 +312,7 @@ const Tool = () => {
                     </Form.Text>
                   </FloatingLabel>
                 </Col>
-                <Col className="all-columns">  max-height: 50%;
+                <Col className="all-columns">
                   <FloatingLabel
                     controlId="floatingInput"
                     className="mb-3"
